@@ -61,7 +61,7 @@ const parse_args = args => {
             continue;
         }
 
-        if (arg === '-o' | arg === '--out') {
+        if (arg === '-o' || arg === '--out') {
             is_out = true;
             continue;
         }
