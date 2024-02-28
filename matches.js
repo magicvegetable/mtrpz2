@@ -8,7 +8,6 @@ const monospaced = '(`.*?(?<!`)`(?!`{1,2}))';
 const all = [italics, bold, preformated, monospaced];
 
 const regexp = new RegExp(all.join('|'), 'gm');
-// const regexp = /((?<=\s|^)(_.*?_)(?=\s|$))|(\*{2}.*?\*{2})|(`{3}(.|\n)*?`{3})|(`.*?(?<!`)`(?!`{1,2}))/gm;
 
 export default regexp;
 

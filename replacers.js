@@ -37,10 +37,10 @@ const monospaced = match => {
 };
 
 const replacers = {
-    preformated: preformated,
-    monospaced: monospaced,
-    bold: bold,
-    italics: italics
+    preformated,
+    monospaced,
+    bold,
+    italics
 };
 
 export default replacers;
