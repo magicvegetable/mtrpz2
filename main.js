@@ -6,12 +6,15 @@ import fs from 'node:fs';
 import expr from './matches.js';
 import replacers from './replacers.js';
 
-const parse_check = replaced => {
+const nested_check = replaced => {
     const matches = replaced.match(expr) ?? [];
     for (const match of matches) {
         console.error(`Nested md is forbidden: ${match}`);
     }
-    return !matches.length;
+
+    if (matches.length) {
+        process.exit(-1);
+    }
 }
 
 const parse = text => {
@@ -27,15 +30,10 @@ const parse = text => {
             if (!match.startsWith(md)) continue;
 
             const replace = replacers[format];
-            const [success, replaced] = replace(match);
+            const replaced = replace(match);
 
-            if (!success) {
-                process.exit(-1);
-            }
-
-            // check
-            if (md !== '```' & !parse_check(replaced)) {
-                process.exit(-1);
+            if (md !== '```') {
+                nested_check(replaced)
             }
 
             return replaced;

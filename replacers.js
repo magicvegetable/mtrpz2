@@ -7,34 +7,23 @@ const check_italics = text => {
         console.error(`Whitespace characters are not allowed before the closing underscore: ${match}`);
     }
 
-    return !matches.length;
+    if (matches.length) {
+        process.exit(-1);
+    }
 };
 
-const replace = (tag, md, match) => {
-    return `<${tag}>${match.substring(md.length, match.length - md.length)}</${tag}>`;
-};
+const replace = (tag, md, match) =>
+    `<${tag}>${match.substring(md.length, match.length - md.length)}</${tag}>`
+;
 
-const italics = match => {
-    const success = check_italics(match);
+const italics = match => (
+    check_italics(match),
+    replace('i', '_', match)
+);
 
-    if (!success) return [success, ''];
-    
-    const replaced = replace('i', '_', match);
-
-    return [success, replaced];
-};
-
-const bold = match => {
-    return [true, replace('b', '**', match)];
-};
-
-const preformated = match => {
-    return [true, replace('pre', '```', match)];
-};
-
-const monospaced = match => {
-    return [true, replace('tt', '`', match)];
-};
+const bold = match => replace('b', '**', match);
+const preformated = match => replace('pre', '```', match);
+const monospaced = match => replace('tt', '`', match);
 
 const replacers = {
     preformated,
