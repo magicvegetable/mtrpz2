@@ -3,23 +3,41 @@
 import process from 'node:process';
 import fs from 'node:fs';
 
-const parse = text => {
-    const expr = /(\*\*((?!\*\*).)*\*\*)|(_((?!_).)*_)|(```((?!```).)*```)|(`((?!`).)*`)/g;
+import expr from './matches.js';
+import replacers from './replacers.js';
 
-    const replacement = {
-        '```': 'pre',
-        '`': 'tt',
-        '**': 'b',
-        '_': 'i'
+const parse_check = replaced => {
+    const matches = replaced.match(expr) ?? [];
+    for (const match of matches) {
+        console.error(`Nested md is forbidden: ${match}`);
+    }
+    return !matches.length;
+}
+
+const parse = text => {
+    const formats = {
+        '```': 'preformated',
+        '`': 'monospaced',
+        '**': 'bold',
+        '_': 'italics'
     };
 
     const parsed = text.replace(expr, match => {
-        for (const [md, tag] of Object.entries(replacement)) {
+        for (const [md, format] of Object.entries(formats)) {
             if (!match.startsWith(md)) continue;
 
-            const replaced = `<${tag}>${match.substring(md.length, match.length - md.length)}</${tag}>`;
+            const replace = replacers[format];
+            const [success, replaced] = replace(match);
 
-            if (md !== '```') return parse(replaced);
+            if (!success) {
+                process.exit(-1);
+            }
+
+            // check
+            if (md !== '```' & !parse_check(replaced)) {
+                process.exit(-1);
+            }
+
             return replaced;
         }
     });
