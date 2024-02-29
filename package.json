@@ -1,5 +1,8 @@
 {
   "type": "module",
+  "scripts": {
+    "test": "node tests/test.js"
+  },
   "dependencies": {
     "ansi-escape-sequences": "^6.2.2"
   }
