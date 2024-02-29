@@ -1,16 +1,6 @@
 'use strict';
 
-const check_italics = text => {
-    const exp = /((?<=\s|^)(_.*?\s_)(?=\s|$))/gm;
-    const matches = text.match(exp) ?? [];
-    for (const match of matches) {
-        console.error(`Whitespace characters are not allowed before the closing underscore: ${match}`);
-    }
-
-    if (matches.length) {
-        process.exit(-1);
-    }
-};
+import check_italics from './check-italics.js';
 
 const replace = (tag, md, match) =>
     `<${tag}>${match.substring(md.length, match.length - md.length)}</${tag}>`

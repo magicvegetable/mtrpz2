@@ -4,7 +4,10 @@ import process from 'node:process';
 import fs from 'node:fs';
 
 import expr from './matches.js';
-import replacers from './replacers.js';
+import html_replacers from './replacers.js';
+import ansi_replacers from './ansi-replacers.js';
+
+let replacers = html_replacers;
 
 const nested_check = replaced => {
     const matches = replaced.match(expr) ?? [];
@@ -53,6 +56,7 @@ const parse_args = args => {
     const mds = [];
     const out = [];
     let is_out = false;
+    let format = 'html';
 
     for (const arg of args.slice(md_file_id)) {
         if (is_out) {
@@ -66,6 +70,16 @@ const parse_args = args => {
             continue;
         }
 
+        if (arg === '--format' || arg === '-f') {
+            format = 'ansi';
+            continue;
+        }
+
+        if (arg.startsWith('--format=')) {
+            format = arg.slice('--format='.length);
+            continue;
+        }
+
         mds.push(arg);
     }
 
@@ -73,11 +87,21 @@ const parse_args = args => {
         console.error(`Error: no file for output specified`)
         process.exit(-1);
     }
-    return [mds, out];
+
+    if (format !== 'ansi' && format !== 'html') {
+        console.warn(`Unsuported format: ${format}, html used by default`);
+        format = 'html';
+    }
+
+    return [mds, out, format];
 }
 
 const run = args => {
-    const [mds, out] = parse_args(args);
+    const [mds, out, format] = parse_args(args);
+
+    if (format === 'ansi') {
+        replacers = ansi_replacers;
+    }
 
     const parsed_elms = [];
 
