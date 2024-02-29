@@ -23,6 +23,18 @@ const test_dir = start_args[1].slice(0, start_args[1].lastIndexOf('/') + 1);
 
 process.chdir(test_dir);
 
+test('--out & -o options', () => {
+    const options = ['-o', '--out'];
+    const name = 'empty';
+    const empty_file = `input/${name}.md`
+    for (const option of options) {
+        const file = `results/${name}${option}`;
+        const args = [...start_args, empty_file, option, file];
+        run(args);
+        compare(file, empty_file);
+    }
+});
+
 try {
     fs.mkdirSync('results/');
 } catch (e) {
