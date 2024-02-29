@@ -44,7 +44,7 @@ const io_names = [
     'bold-italics-monospaced-preformatted'
 ];
 
-describe('simple html tests', () => {
+describe('simple html', () => {
     for (const name of io_names) {
         it(name, () => {
             const file = `results/${name}.html`;
@@ -55,7 +55,7 @@ describe('simple html tests', () => {
     }
 });
 
-describe('simple ansi tests', () => {
+describe('simple ansi', () => {
     for (const name of io_names) {
         it(name, () => {
             const file = `results/${name}.ansi`;
