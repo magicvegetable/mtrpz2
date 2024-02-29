@@ -66,7 +66,3 @@ describe('simple ansi tests', () => {
     }
 });
 
-test('R.I.P.', () => {
-    assert.strictEqual(1, 0);
-});
-
