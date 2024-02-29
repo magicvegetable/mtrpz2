@@ -2,10 +2,10 @@
 
 const italics = '((?<=\\s|^)(_.*?_)(?=\\s|$))';
 const bold = '(\\*{2}.*?\\*{2})';
-const preformated = '(`{3}(.|\\n)*?`{3})';
+const preformatted = '(`{3}(.|\\n)*?`{3})';
 const monospaced = '(`.*?(?<!`)`(?!`{1,2}))';
 
-const all = [italics, bold, preformated, monospaced];
+const all = [italics, bold, preformatted, monospaced];
 
 const regexp = new RegExp(all.join('|'), 'gm');
 

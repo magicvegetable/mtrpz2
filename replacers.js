@@ -22,11 +22,11 @@ const italics = match => (
 );
 
 const bold = match => replace('b', '**', match);
-const preformated = match => replace('pre', '```', match);
+const preformatted = match => replace('pre', '```', match);
 const monospaced = match => replace('tt', '`', match);
 
 const replacers = {
-    preformated,
+    preformatted,
     monospaced,
     bold,
     italics

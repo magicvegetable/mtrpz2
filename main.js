@@ -19,7 +19,7 @@ const nested_check = replaced => {
 
 const parse = text => {
     const formats = {
-        '```': 'preformated',
+        '```': 'preformatted',
         '`': 'monospaced',
         '**': 'bold',
         '_': 'italics'
