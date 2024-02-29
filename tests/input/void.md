@@ -1,0 +1,1 @@
+Cosmic voids are vast spaces between filaments, which contain very few or no galaxies. Most galaxies are not located in voids, despite their size, due to most galaxies being gravitationally bound together, creating huge cosmic structures known as galaxy filaments.
