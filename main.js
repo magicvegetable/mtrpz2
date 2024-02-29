@@ -99,9 +99,10 @@ const parse_args = args => {
 const run = args => {
     const [mds, out, format] = parse_args(args);
 
-    if (format === 'ansi') {
-        replacers = ansi_replacers;
-    }
+    replacers = format === 'ansi' ?
+        ansi_replacers
+        : html_replacers
+    ;
 
     const parsed_elms = [];
 
