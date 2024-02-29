@@ -1,6 +1,7 @@
 'use strict';
 
-const italics = '((?<=\\s|^)(_.*?_)(?=\\s|$))';
+const italics_around = '\\.|,|;|\\?|\\]|\\}|\'|"|`';
+const italics = `((?<=\\s|^|${italics_around})(_.*?_)(?=\\s|$|${italics_around}))`;
 const bold = '(\\*{2}.*?\\*{2})';
 const preformatted = '(`{3}(.|\\n)*?`{3})';
 const monospaced = '(`.*?(?<!`)`(?!`{1,2}))';
