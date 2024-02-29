@@ -35,6 +35,38 @@ test('--out & -o options', () => {
     }
 });
 
+test('--format & -f & --format=value options', () => {
+    const options = ['-f', '--format'];
+    const name = 'format';
+    const ansi_file = `output/${name}.ansi`
+    const md_file = `input/${name}.md`;
+    for (const option of options) {
+        const file = `results/${name}${option}.ansi`;
+        const args = [...start_args, md_file, '--out', file, option];
+        run(args);
+        compare(file, ansi_file);
+    }
+
+    const values = ['ansi', 'html'];
+    const check_files = {
+        ansi: ansi_file,
+        html: `output/${name}.html`
+    };
+
+    for (const value of values) {
+        const file = `results/${name}.${value}`;
+        const args = [...start_args, md_file, '--out', file, `--format=${value}`];
+        run(args);
+        compare(file, check_files[value]);
+    }
+
+    // default -> html
+    const file = `results/${name}-default.html`;
+    const args = [...start_args, md_file, '--out', file];
+    run(args);
+    compare(file, check_files['html']);
+});
+
 try {
     fs.mkdirSync('results/');
 } catch (e) {
