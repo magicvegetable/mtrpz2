@@ -30,5 +30,9 @@ Set format of output to `ansi`
 ## Link to revert commit
 [Revert commit](https://github.com/magicvegetable/mtrpz2/commit/35b2851f0caf5b3372eb3e1deee22ac97715e0df)
 
+
+## Link to commit with failed tests
+[Commit with failed tests](https://github.com/magicvegetable/mtrpz2/commit/5ebbccc5fe41f2d7cd4d5cb1f8d98c2e47eee3ce)
+
 ## Conclusion
 In conclusion, this lab provided a valuable hands-on experience in writing unit tests for Markdown parser. By thoroughly testing the functionality of the parser, I ensure its reliability and accuracy in converting Markdown syntax into HTML and ANSI Escape Sequences formats.
