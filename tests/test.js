@@ -66,3 +66,37 @@ describe('simple ansi tests', () => {
     }
 });
 
+const spec_names = ['bold', 'italics', 'monospaced', 'preformatted'];
+
+for (const name of spec_names) {
+    describe(`specific ${name}`, () => {
+        try {
+            fs.mkdirSync(`results/${name}/`);
+        } catch (e) {
+            const errno = e.errno;
+            if (errno !== -17) { // -17 -> already exists
+                console.error(e);
+                process.exit(-1);
+            }
+        }
+
+        for (let i = 0; i < 3; i++) {
+            it(`input/${name}/${i}.md to output/${name}/${i}.html`, () => {
+                const file = `results/${name}/${i}.html`;
+                const args = [...start_args, `input/${name}/${i}.md`, '--out', file];
+                run(args);
+                compare(file, `output/${name}/${i}.html`);
+            });
+        }
+
+        for (let i = 0; i < 3; i++) {
+            it(`input/${name}/${i}.md to output/${name}/${i}.ansi`, () => {
+                const file = `results/${name}/${i}.ansi`;
+                const args = [...start_args, `input/${name}/${i}.md`, '--out', file, '--format'];
+                run(args);
+                compare(file, `output/${name}/${i}.ansi`);
+            });
+        }
+    });
+}
+
