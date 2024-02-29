@@ -112,6 +112,19 @@ describe('simple ansi', () => {
 
 const spec_names = ['bold', 'italics', 'monospaced', 'preformatted'];
 
+const multi_test = (name, amount) => {
+    for (const format of ['html', 'ansi']) {
+        for (let i = 0; i < amount; i++) {
+            it(`input/${name}/${i}.${format} to output/${name}/${i}.${format}`, () => {
+                const file = `results/${name}/${i}.${format}`;
+                const args = [...start_args, `input/${name}/${i}.md`, '--out', file, `--format=${format}`];
+                run(args);
+                compare(file, `output/${name}/${i}.${format}`);
+            });
+        }
+    }
+};
+
 for (const name of spec_names) {
     describe(`specific ${name}`, () => {
         try {
@@ -124,23 +137,7 @@ for (const name of spec_names) {
             }
         }
 
-        for (let i = 0; i < 3; i++) {
-            it(`input/${name}/${i}.md to output/${name}/${i}.html`, () => {
-                const file = `results/${name}/${i}.html`;
-                const args = [...start_args, `input/${name}/${i}.md`, '--out', file];
-                run(args);
-                compare(file, `output/${name}/${i}.html`);
-            });
-        }
-
-        for (let i = 0; i < 3; i++) {
-            it(`input/${name}/${i}.md to output/${name}/${i}.ansi`, () => {
-                const file = `results/${name}/${i}.ansi`;
-                const args = [...start_args, `input/${name}/${i}.md`, '--out', file, '--format'];
-                run(args);
-                compare(file, `output/${name}/${i}.ansi`);
-            });
-        }
+        multi_test(name, 3);
     });
 }
 
