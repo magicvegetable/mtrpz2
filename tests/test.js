@@ -141,3 +141,18 @@ for (const name of spec_names) {
     });
 }
 
+describe(`all: ${spec_names.join(' & ')}`, () => {
+    const name = `all`;
+    try {
+        fs.mkdirSync(`results/${name}/`);
+    } catch (e) {
+        const errno = e.errno;
+        if (errno !== -17) { // -17 -> already exists
+            console.error(e);
+            process.exit(-1);
+        }
+    }
+
+    multi_test(name, 3);
+});
+
